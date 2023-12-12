@@ -1,3 +1,2 @@
 # latrodectus
-a javaScript spider
- 
+A JavaScript Web Crawler
