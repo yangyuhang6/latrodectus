@@ -1,4 +1,5 @@
-const launch = require('puppeteer');
+const { launch } = require('puppeteer');
+
 const print = console.log;
 
 (async () => {
@@ -6,8 +7,8 @@ const print = console.log;
   const page = await browser.newPage();
 
   try {
-    const targetID = '#index_zwlb';
-    await page.goto('https://www.gov.cn/');
+    const targetID = '.txtlist';
+    await page.goto('https://www.zyctd.com/jiage/1-0-0.html');
     await page.waitForSelector(targetID, {
       timeout: 5000,
     });
@@ -21,12 +22,10 @@ const print = console.log;
         throw new Error(`div${await targetID()} not exists`);
       }
 
-      return Array.from(container.children[1].querySelectorAll('a')).map(
-        anchor => ({
-          href: anchor.href,
-          text: anchor.innerHTML.trim(),
-        })
-      );
+      return Array.from(container.querySelectorAll('a')).map(anchor => ({
+        href: anchor.href,
+        text: anchor.innerHTML.trim(),
+      }));
     });
 
     print(news, news.length);

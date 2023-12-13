@@ -1,6 +1,10 @@
 {
-    "extends": [
-      "eslint-config-egg",
-      "eslint-config-egg/lib/rules/enforce-node-prefix"
-    ]
+  "extends": [
+    "eslint-config-egg",
+    "eslint-config-egg/lib/rules/enforce-node-prefix"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  }
 }
