@@ -5,21 +5,10 @@ const print = console.log;
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.setRequestInterception(true);
-  page.on('request', interceptedRequest => {
-    if (
-      interceptedRequest.url().endsWith('.png') ||
-      interceptedRequest.url().endsWith('.jpg')
-    ) {
-      interceptedRequest.abort();
-    } else {
-      interceptedRequest.continue();
-    }
-  });
 
   try {
-    const targetID = '.rank';
-    await page.goto('https://www.yt1998.com/supplyInfo.html');
+    const targetID = '.index_news_2.mt10.ml20';
+    await page.goto('https://qxn.yt1998.com/');
     await page.waitForSelector(targetID, {
       timeout: 5000,
     });
@@ -33,7 +22,7 @@ const print = console.log;
         throw new Error(`div${await targetID()} not exists`);
       }
 
-      return Array.from(container.querySelectorAll('a')).map(anchor => ({
+      return Array.from(container.children[2].querySelectorAll('a')).map(anchor => ({
         text: anchor.innerHTML.trim(),
       }));
     });

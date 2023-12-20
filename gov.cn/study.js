@@ -5,21 +5,10 @@ const print = console.log;
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.setRequestInterception(true);
-  page.on('request', interceptedRequest => {
-    if (
-      interceptedRequest.url().endsWith('.png') ||
-      interceptedRequest.url().endsWith('.jpg')
-    ) {
-      interceptedRequest.abort();
-    } else {
-      interceptedRequest.continue();
-    }
-  });
 
   try {
-    const targetID = '.rank';
-    await page.goto('https://www.yt1998.com/supplyInfo.html');
+    const targetID = '.word-text-con';
+    await page.goto('https://www.fortunechina.com/fortune500/c/2023-08/02/content_436884.htm');
     await page.waitForSelector(targetID, {
       timeout: 5000,
     });
@@ -27,13 +16,13 @@ const print = console.log;
     await page.exposeFunction('targetID', () => targetID);
 
     const news = await page.evaluate(async () => {
-      const container = document.querySelector(await targetID());
+      const contatiner = document.querySelector(await targetID());
 
-      if (container === null) {
+      if (contatiner === null) {
         throw new Error(`div${await targetID()} not exists`);
       }
 
-      return Array.from(container.querySelectorAll('a')).map(anchor => ({
+      return Array.from(contatiner.querySelectorAll('p')).map(anchor => ({
         text: anchor.innerHTML.trim(),
       }));
     });
