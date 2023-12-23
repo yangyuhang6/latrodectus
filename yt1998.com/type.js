@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 
+const print = console.log;
+
 (async () => {
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -13,13 +15,13 @@ const puppeteer = require('puppeteer');
     return document.querySelector('#priceList > tr:nth-child(5) > td:nth-child(11) > em > a').innerHTML;
   });
 
-  console.log(priceElementText);
+  print(priceElementText);
 
   await page.screenshot({ path: 'screenshot/yt1998_index.png' });
 
   const container = await page.$('.type');
 
-  console.log(container);
+  print(container);
 
   const data = await container.$$eval('a', nodes => nodes.map(n => {
     return {
@@ -28,7 +30,7 @@ const puppeteer = require('puppeteer');
     };
   }));
 
-  console.log(data);
+  print(data);
 
   await browser.close();
 })();
